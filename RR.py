@@ -1,47 +1,54 @@
-#!/usr/bin/python
-p=[]
-total=int(raw_input("Enter a count of process :"))
-time_slice=int(raw_input("Time Slice"))
-for index in xrange(int(total)):
-	p.append([])
-	p[index].append(raw_input("Process:"))
-	p[index].append(int(raw_input("A.T:")))
-        p[index].append(int(raw_input("B.T:")))
+def initialize(process,total_process):
+	index=0	
+	for index in xrange(int(total_process)):
+		process.append([])
+		process[index].append(raw_input("Process:"))
+		process[index].append(int(raw_input("A.T:")))
+        	process[index].append(int(raw_input("B.T:")))
 
-run=[]
-p.sort(key=lambda p:p[1])
-tb=0
-import Queue
-ready=Queue
-ready=ready.Queue()
-arr=0
-ready.put(p[arr])
-arr+=1
-while not ready.empty():
-	run=ready.get()
-	if run[2]>=time_slice:
-		run[2]=run[2]-time_slice
-		print run
-		tb+=time_slice
-		if arr<=total:
-			while arr<total:
-				if p[arr][1]<=tb:	
-					ready.put(p[arr])
-				if arr+1==total:
-					arr+=1
-					break
-				arr+=1
-		if run[2]!=0:
-			ready.put(run)
-	else:
-		print run
-		tb+=run[2]
-		if arr<=total:
-			while arr<total:
-				if p[arr][1]<=tb:
-					ready.put(p[arr])
-				if arr+1==total:
-					arr+=1
-					break
-				arr+=1
+def sorting(process):
+	process.sort(key=lambda process:process[1])
+
+def setvalues():
+	process=[]
+	total_process=int(raw_input("Enter a count of process :"))
+	time_slice=int(raw_input("Time Slice:"))
+	initialize(process,total_process)
+	perform(process,total_process,time_slice)	
+
+def perform(process,total_process,time_slice):
+	running_process=[]
+	total_burst=0
+	import Queue
+	ready_queue=Queue
+	ready_queue=ready_queue.Queue()
+	element_count=0
+	ready_queue.put(process[element_count])
+	element_count+=1
+	calculation(process,total_process,time_slice,total_burst,ready_queue,element_count)
+
+def calculation(process,total_process,time_slice,total_burst,ready_queue,element_count):
+	while not ready_queue.empty() or element_count<total_process:
+		running_process=ready_queue.get()
+		if running_process[2]>=time_slice:
+			running_process[2]=running_process[2]-time_slice
+			print running_process
+			total_burst+=time_slice
+			if element_count<=total_process:
+				while element_count<total_process:
+					if process[element_count][1]<=total_burst:	
+						ready_queue.put(process[element_count])
+					element_count+=1
+			if running_process[2]!=0:
+				ready_queue.put(running_process)
+		else:
+			print running_process
+			total_burst+=running_process[2]
+			if element_count<=total_process:
+				while element_count<total_process:
+					if process[element_count][1]<=total_burst:
+						ready_queue.put(process[element_count])
+					element_count+=1
+setvalues()
+
 						
