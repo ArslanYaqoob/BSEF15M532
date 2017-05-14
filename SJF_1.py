@@ -1,20 +1,31 @@
-#!/usr/bin/python
-pro=[]
-total=int(raw_input("Enter Count:"))
-index=0
-bt=0
-for index in xrange(total):
-	pro.append([])
-	pro[index].append(raw_input("Enter P.Name:"))
-	pro[index].append(int(raw_input("A.T:")))
-	pro[index].append(int(raw_input("B.T:")))
-	bt+=pro[index][2]
-	pro.sort(key=lambda pro:pro[1])
+def initialize(process,total_process):
+	index=0	
+	for index in xrange(total_process):
+		process.append([])
+		process[index].append(raw_input("Enter P.Name:"))
+		process[index].append(int(raw_input("A.T:")))
+		process[index].append(int(raw_input("B.T:")))
 
-index=0
-print "Pro,A.T,B.T"
-for index in xrange(total-1):
-	print pro[index]
+def print_process(process,total_process):
+	total_burst=0
+	print 'PName\tA. Time\tB.Time'
+	index=0
+	for index in xrange(int(total_process)):
+        	print process[index][0] ,'\t',process[index][1],'\t',process[index][2]
+        	total_burst+=process[index][2]
+	
+	print "Total Time : ",total_burst
 
-print "Total Busrt Time :" ,bt
+def sorting(process):
+	process.sort(key=lambda process:process[1])
+	process.sort(key=lambda process:process[2])
+
+
+total_process=int(raw_input("Enter Count:"))
+process=[] 
+initialize(process,total_process)
+sorting(process)
+print_process(process,total_process)
+
+
 
