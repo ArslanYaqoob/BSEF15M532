@@ -1,18 +1,32 @@
-#!/usr/bin/python
-pro=[]
-total=raw_input("Enter a count of process :")
-b_t=0
-for index in xrange(int(total)):
-	pro.append([])
-	pro[index].append(raw_input("Process:"))
-	pro[index].append(int(raw_input("A.T:")))
-	pro[index].append(int(raw_input("Priority:")))
-        pro[index].append(int(raw_input("B.T:")))
-	b_t+=pro[index][3]
-pro.sort(key=lambda pro:pro[1])
-pro.sort(key=lambda pro:pro[2])
-index=0
-print "pro\tA.T\tPriority\tB.T\n"
-for index in xrange(int(total)):
-	print pro[index][0],'\t',pro[index][1],'\t',pro[index][2],'\t',pro[index][3],'\n'
-print "Burst_time : ",b_t
+def initialize(process,total_process):
+	index=0	
+	for index in xrange(total_process):
+		process.append([])
+		process[index].append(raw_input("Enter P.Name:"))
+		process[index].append(int(raw_input("A.T:")))
+		process[index].append(int(raw_input("B.T:")))
+		process[index].append(int(raw_input("priority:")))
+
+def print_process(process,total_process):
+	total_burst=0
+	print 'PName\tA. Time\tB.Time\t Priority'
+	index=0
+	for index in xrange(int(total_process)):
+        	print process[index][0] ,'\t',process[index][1],'\t',process[index][2],'\t',process[index][3]
+        	total_burst+=process[index][2]
+	
+	print "Total Time : ",total_burst
+
+def sorting(process):
+	process.sort(key=lambda process:process[1])
+	process.sort(key=lambda process:process[3])
+
+
+total_process=int(raw_input("Enter Count:"))
+process=[] 
+initialize(process,total_process)
+sorting(process)
+print_process(process,total_process)
+
+
+
